@@ -1,0 +1,11 @@
+﻿namespace WA_Blog.Models.Entities;
+
+public class Contact : BaseEntity
+{
+    public string FullName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Subject { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
+    public bool  IsRead { get; set; }
+    public DateTime? ReadDate { get; set; }
+}
