@@ -1,5 +1,5 @@
 using FluentValidation;
-using WA_Blog.Models.Entities;
+using VillaAgency.Models.Entities;
 
 namespace VillaAgency.Validators;
 

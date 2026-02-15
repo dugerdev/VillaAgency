@@ -1,4 +1,4 @@
-﻿namespace WA_Blog.Models.Entities;
+﻿namespace VillaAgency.Models.Entities;
 
 public class FAQ : BaseEntity 
 {

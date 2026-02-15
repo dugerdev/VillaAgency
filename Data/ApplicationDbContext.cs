@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using VillaAgency.Models.Entities;
-using WA_Blog.Models.Entities;
+using VillaAgency.Models.Entities;
 
-namespace WA_Blog.Data
+namespace VillaAgency.Data
 {
     public class ApplicationDbContext : IdentityDbContext<AppilcationUser>
     {
@@ -20,6 +20,15 @@ namespace WA_Blog.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            // Identity tablo adlarını özelleştirme (şema: app)
+            builder.Entity<AppilcationUser>().ToTable("Users", "app");
+            builder.Entity<IdentityRole>().ToTable("Roles", "app");
+            builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles", "app");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims", "app");
+            builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins", "app");
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", "app");
+            builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", "app");
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
@@ -42,6 +51,9 @@ namespace WA_Blog.Data
                 }
 
                 );
+
+            // Template seed data
+            SeedData.Seed(builder);
         }
 
         public DbSet<Banner> Banners { get; set; }

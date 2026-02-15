@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WA_Blog.Data;
+using VillaAgency.Data;
 using VillaAgency.Models.Entities;
 using System.Reflection;
 using FluentValidation;

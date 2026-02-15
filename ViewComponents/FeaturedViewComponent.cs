@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace WA_Blog.ViewComponents
+namespace VillaAgency.ViewComponents
 {
     public class FeaturedViewComponent : ViewComponent
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WA_Blog.Controllers
+namespace VillaAgency.Controllers
 {
     public class PropertiesController : Controller
     {

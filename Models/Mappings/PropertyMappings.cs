@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WA_Blog.Models.Entities;
+using VillaAgency.Models.Entities;
 
-namespace WA_Blog.Models.Mappings
+namespace VillaAgency.Models.Mappings
 {
     public class PropertyMappings : IEntityTypeConfiguration<Property>
     {
