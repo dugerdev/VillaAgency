@@ -1,0 +1,44 @@
+﻿@using VillaAgency.Models.Entities
+@model List<FAQ>
+
+<div class="page-header">
+    <h2><i class="fa fa-circle-question me-2" style="color:#f59e0b;"></i>FAQs</h2>
+    <a asp-action="Create" class="btn-primary-custom"><i class="fa fa-plus me-2"></i>New FAQ</a>
+</div>
+
+<div class="admin-table">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr>
+                <th>Order</th>
+                <th>Question</th>
+                <th>Answer</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr><td colspan="4" class="text-center py-5 text-muted">No FAQs yet.</td></tr>
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><span style="font-weight:700;color:#f59e0b;font-size:16px;">@item.DisplayOrder</span></td>
+                    <td style="font-weight:600;max-width:280px;">@item.Question</td>
+                    <td style="color:#64748b;font-size:13px;max-width:320px;">@(item.Answer.Length > 80 ? item.Answer[..80] + "…" : item.Answer)</td>
+                    <td>
+                        <div class="action-btns">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-edit">Edit</a>
+                            <form asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Delete this FAQ?')">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn-del">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

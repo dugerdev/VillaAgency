@@ -1,0 +1,131 @@
+@model VillaAgency.Areas.Admin.Models.PropertyCreateViewModel
+
+<div class="page-header">
+    <h2><i class="fa fa-plus me-2" style="color:#f59e0b;"></i>New Property</h2>
+    <a asp-action="Index" class="btn-secondary-custom"><i class="fa fa-arrow-left me-2"></i>Back</a>
+</div>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Basic Information</h6>
+                <div class="mb-3">
+                    <label class="form-label">Title *</label>
+                    <input asp-for="Title" class="form-control" placeholder="e.g. Modern Villa in Miami" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="5" placeholder="Describe the property..."></textarea>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Price ($) *</label>
+                        <input asp-for="Price" class="form-control" type="number" step="0.01" placeholder="0.00" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Property Type *</label>
+                        <select asp-for="PropertyTypeId" asp-items="Model.PropertyTypes" class="form-select">
+                            <option value="">-- Select Type --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Location</h6>
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <input asp-for="Address" class="form-control" placeholder="Street address" />
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">City</label>
+                        <input asp-for="City" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">State</label>
+                        <input asp-for="State" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Zip Code</label>
+                        <input asp-for="ZipCode" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Specifications</h6>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Bedrooms</label>
+                        <input asp-for="BedRooms" class="form-control" type="number" min="0" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Bathrooms</label>
+                        <input asp-for="Bathrooms" class="form-control" type="number" min="0" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Area (m²)</label>
+                        <input asp-for="Area" class="form-control" type="number" step="0.01" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Floor</label>
+                        <input asp-for="Floor" class="form-control" type="number" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Total Flat Space (m²)</label>
+                        <input asp-for="TotalFlatSpace" class="form-control" type="number" step="0.01" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Parking</label>
+                        <input asp-for="Parking" class="form-control" placeholder="e.g. 2 cars, underground" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Media</h6>
+                <div class="mb-3">
+                    <label class="form-label">Property Images</label>
+                    <input type="file" name="Images" class="form-control" multiple accept="image/*" />
+                    <div class="form-text">You can select multiple images.</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Video Tour URL</label>
+                    <input asp-for="VideoUrl" class="form-control" placeholder="https://youtube.com/..." />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Options</h6>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsFeatured" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsFeatured" class="form-check-label">Featured Property</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsContractReady" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsContractReady" class="form-check-label">Contract Ready</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Payment Process</label>
+                    <input asp-for="PaymentProcess" class="form-control" placeholder="e.g. Cash, Mortgage" />
+                </div>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn-primary-custom text-center py-3">
+                    <i class="fa fa-check me-2"></i>Create Property
+                </button>
+                <a asp-action="Index" class="btn-secondary-custom text-center py-2">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>

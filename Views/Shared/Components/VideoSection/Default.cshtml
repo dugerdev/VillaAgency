@@ -1,3 +1,6 @@
+@using VillaAgency.Models.Entities
+@model SiteSetting 
+
 <div class="video section">
     <div class="container">
         <div class="row">
@@ -17,7 +20,7 @@
             <div class="col-lg-10 offset-lg-1">
                 <div class="video-frame">
                     <img src="~/assets/images/video-frame.jpg" alt="">
-                    <a href="https://youtube.com" target="_blank"><i class="fa fa-play"></i></a>
+                    <a href="@Model.VideoUrl" target="_blank"><i class="fa fa-play"></i></a>
                 </div>
             </div>
         </div>

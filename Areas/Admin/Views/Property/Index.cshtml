@@ -1,0 +1,78 @@
+﻿@using VillaAgency.Models.Entities
+@model List<Property>
+
+<div class="page-header">
+    <h2><i class="fa fa-building me-2" style="color:#f59e0b;"></i>Properties</h2>
+    <a asp-area="Admin" asp-controller="Property" asp-action="Create" class="btn-primary-custom">
+        <i class="fa fa-plus me-2"></i>New Property
+    </a>
+</div>
+
+<div class="admin-table">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>City</th>
+                <th>Beds/Baths</th>
+                <th>Featured</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr><td colspan="8" class="text-center py-5 text-muted">No properties found. <a asp-action="Create">Add one</a>.</td></tr>
+            }
+            @foreach (var item in Model)
+            {
+                var img = item.PropertyImages.FirstOrDefault();
+                <tr>
+                    <td>
+                        @if (img != null)
+                        {
+                            <img src="@img.ImageUrl" class="img-preview" alt="@item.Tittle" />
+                        }
+                        else
+                        {
+                            <div style="width:80px;height:60px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+                                <i class="fa fa-image" style="color:#94a3b8;"></i>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        <div style="font-weight:600;font-size:14px;color:#0f172a;">@item.Tittle</div>
+                        <div style="font-size:12px;color:#94a3b8;">@item.Area m² · Floor @(item.Floor?.ToString() ?? "N/A")</div>
+                    </td>
+                    <td><span style="background:#f1f5f9;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:500;">@item.PropertyType?.Name</span></td>
+                    <td style="font-weight:600;color:#0f172a;">$@item.Price.ToString("N0")</td>
+                    <td>@item.City</td>
+                    <td>@item.BedRooms bd / @item.Bathrooms ba</td>
+                    <td>
+                        @if (item.IsFeatured)
+                        {
+                            <span style="background:#fef3c7;color:#d97706;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;">⭐ Featured</span>
+                        }
+                        else
+                        {
+                            <span style="color:#94a3b8;font-size:12px;">—</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-edit">Edit</a>
+                            <form asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Delete this property?')">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn-del">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

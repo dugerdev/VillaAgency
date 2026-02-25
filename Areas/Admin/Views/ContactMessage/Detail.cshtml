@@ -1,0 +1,52 @@
+@using VillaAgency.Models.Entities
+@model Contact
+
+<div class="page-header">
+    <h2><i class="fa fa-envelope-open me-2" style="color:#f59e0b;"></i>Message Detail</h2>
+    <a asp-action="Index" class="btn-secondary-custom"><i class="fa fa-arrow-left me-2"></i>Back to Messages</a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="form-card">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                <div>
+                    <h5 style="font-weight:700;margin:0;color:#0f172a;">@Model.FullName</h5>
+                    <a href="mailto:@Model.Email" style="font-size:13px;color:#64748b;">@Model.Email</a>
+                </div>
+                <span style="font-size:12px;color:#94a3b8;">@Model.CreatedDate.ToString("MMMM dd, yyyy HH:mm")</span>
+            </div>
+
+            <div class="mb-4">
+                <div style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Subject</div>
+                <p style="font-size:15px;font-weight:600;color:#374151;margin:0;">@Model.Subject</p>
+            </div>
+
+            <div class="mb-4">
+                <div style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Message</div>
+                <div style="background:#f8fafc;border-radius:10px;padding:20px;font-size:14px;color:#374151;line-height:1.7;border:1px solid #e2e8f0;">
+                    @Model.Message
+                </div>
+            </div>
+
+            @if (Model.ReadDate.HasValue)
+            {
+                <div style="font-size:12px;color:#94a3b8;text-align:right;">
+                    <i class="fa fa-check-double me-1" style="color:#16a34a;"></i>
+                    Read on @Model.ReadDate.Value.ToString("MMM dd, yyyy HH:mm")
+                </div>
+            }
+
+            <div class="mt-4 pt-3 border-top d-flex justify-content-between">
+                <a href="mailto:@Model.Email" class="btn-primary-custom"><i class="fa fa-reply me-2"></i>Reply via Email</a>
+                <form asp-action="Delete" method="post" onsubmit="return confirm('Delete this message?')">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn-del" style="padding:9px 20px;border-radius:8px;font-size:14px;">
+                        <i class="fa fa-trash me-2"></i>Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

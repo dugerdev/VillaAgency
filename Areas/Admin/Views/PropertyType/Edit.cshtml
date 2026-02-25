@@ -1,0 +1,29 @@
+@model VillaAgency.Areas.Admin.Models.PropertyTypeViewModel
+
+<div class="page-header">
+    <h2><i class="fa fa-pen me-2" style="color:#f59e0b;"></i>Edit Property Type</h2>
+    <a asp-action="Index" class="btn-secondary-custom"><i class="fa fa-arrow-left me-2"></i>Back</a>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="form-card">
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-4">
+                    <label class="form-label">Name *</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn-primary-custom flex-grow-1"><i class="fa fa-check me-2"></i>Save</button>
+                    <a asp-action="Index" class="btn-secondary-custom">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

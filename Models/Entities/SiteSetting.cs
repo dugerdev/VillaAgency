@@ -7,4 +7,5 @@ public class SiteSetting : BaseEntity
     public string Address { get; set; } = string.Empty;
     public string MapEmbedUrl { get; set; } = string.Empty;
     public string SiteName { get; set; } = string.Empty;
+    public string VideoUrl { get; set; } = string.Empty;
 }

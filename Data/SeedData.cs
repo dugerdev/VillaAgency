@@ -1,5 +1,6 @@
-using VillaAgency.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using VillaAgency.Models.Entities;
 
 namespace VillaAgency.Data;
 
@@ -44,6 +45,7 @@ public static class SeedData
         SeedPropertyImages(builder);
         SeedFAQs(builder);
         SeedSiteSettings(builder);
+        SeedUsers(builder);
     }
 
     // ═══════════════════════════════════════════
@@ -465,6 +467,7 @@ public static class SeedData
                 Email = "info@villa.co",
                 Address = "Sunny Isles Beach, FL 33160",
                 MapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12469.776493332698!2d-80.14036379941481!3d25.907788681148624!2m3!1f357.26927939317244!2f20.870722720054623!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x88d9add4b4ac788f%3A0xe77469d09480fcdb!2sSunny%20Isles%20Beach!5e1!3m2!1sen!2sth!4v1642869952544!5m2!1sen!2sth",
+                VideoUrl = "https://www.youtube.com/watch?v=7HKq20ihNAU",
                 SiteName = "Villa Agency",
                 CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 IsActive = true,
@@ -472,4 +475,43 @@ public static class SeedData
             }
         );
     }
+
+    // Seed(ModelBuilder builder) içine ekle:
+    // SeedUsers(builder); 
+
+    private static void SeedUsers(ModelBuilder builder)
+    {
+        var adminRoleId = "019c330e-6c3e-7ace-aa53-1dfe8fda644f"; // AppDbContext ile aynı olmalı
+        var adminUserId = "019c330e-6c3e-7ace-aa53-1dfe8fda644e"; // Yeni bir ID
+
+        var hasher = new PasswordHasher<AppilcationUser>();
+
+        // 1. Admin Kullanıcısı
+        var adminUser = new AppilcationUser
+        {
+            Id = adminUserId,
+            UserName = "admin@villa.co",
+            NormalizedUserName = "ADMIN@VILLA.CO",
+            Email = "admin@villa.co",
+            NormalizedEmail = "ADMIN@VILLA.CO",
+            EmailConfirmed = true,
+            SecurityStamp = Guid.NewGuid().ToString("D"),
+            FirstName = "Admin",
+            LastName = "User"
+        };
+
+        // Şifre: Admin123!
+        adminUser.PasswordHash = hasher.HashPassword(adminUser, "Admin123!");
+
+        builder.Entity<AppilcationUser>().HasData(adminUser);
+
+        // 2. Rol Ataması (Admin Rolü)
+        builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+        {
+            RoleId = adminRoleId,
+            UserId = adminUserId
+        });
+    }
+
+
 }

@@ -1,0 +1,118 @@
+@model VillaAgency.Areas.Admin.Models.PropertyEditViewModel
+
+<div class="page-header">
+    <h2><i class="fa fa-pen me-2" style="color:#f59e0b;"></i>Edit Property</h2>
+    <a asp-action="Index" class="btn-secondary-custom"><i class="fa fa-arrow-left me-2"></i>Back</a>
+</div>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Basic Information</h6>
+                <div class="mb-3">
+                    <label class="form-label">Title *</label>
+                    <input asp-for="Title" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Price ($)</label>
+                        <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Property Type</label>
+                        <select asp-for="PropertyTypeId" asp-items="Model.PropertyTypes" class="form-select"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Location</h6>
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <input asp-for="Address" class="form-control" />
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4"><label class="form-label">City</label><input asp-for="City" class="form-control" /></div>
+                    <div class="col-md-4"><label class="form-label">State</label><input asp-for="State" class="form-control" /></div>
+                    <div class="col-md-4"><label class="form-label">Zip Code</label><input asp-for="ZipCode" class="form-control" /></div>
+                </div>
+            </div>
+
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Specifications</h6>
+                <div class="row g-3">
+                    <div class="col-md-3"><label class="form-label">Bedrooms</label><input asp-for="BedRooms" class="form-control" type="number" /></div>
+                    <div class="col-md-3"><label class="form-label">Bathrooms</label><input asp-for="Bathrooms" class="form-control" type="number" /></div>
+                    <div class="col-md-3"><label class="form-label">Area (m²)</label><input asp-for="Area" class="form-control" type="number" step="0.01" /></div>
+                    <div class="col-md-3"><label class="form-label">Floor</label><input asp-for="Floor" class="form-control" type="number" /></div>
+                    <div class="col-md-6"><label class="form-label">Total Flat Space</label><input asp-for="TotalFlatSpace" class="form-control" type="number" step="0.01" /></div>
+                    <div class="col-md-6"><label class="form-label">Parking</label><input asp-for="Parking" class="form-control" /></div>
+                </div>
+            </div>
+
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Current Images</h6>
+                @if (Model.ExistingImages.Any())
+                {
+                    <div class="d-flex flex-wrap gap-3 mb-3">
+                        @foreach (var img in Model.ExistingImages)
+                        {
+                            <div style="position:relative;">
+                                <img src="@img.ImageUrl" style="width:100px;height:75px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;" />
+                                <form asp-action="DeleteImage" method="post" style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="imageId" value="@img.Id" />
+                                    <input type="hidden" name="propertyId" value="@Model.Id" />
+                                    <button type="submit" title="Delete image" style="position:absolute;top:-8px;right:-8px;background:#ef4444;border:none;color:#fff;border-radius:50%;width:22px;height:22px;font-size:11px;cursor:pointer;" onclick="return confirm('Remove this image?')">✕</button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                }
+                <div class="mb-3">
+                    <label class="form-label">Add New Images</label>
+                    <input type="file" name="NewImages" class="form-control" multiple accept="image/*" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Video Tour URL</label>
+                    <input asp-for="VideoUrl" class="form-control" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-card mb-4">
+                <h6 style="font-weight:700;margin-bottom:20px;color:#0f172a;">Options</h6>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsFeatured" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsFeatured" class="form-check-label">Featured Property</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsContractReady" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsContractReady" class="form-check-label">Contract Ready</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Payment Process</label>
+                    <input asp-for="PaymentProcess" class="form-control" />
+                </div>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn-primary-custom text-center py-3">
+                    <i class="fa fa-check me-2"></i>Save Changes
+                </button>
+                <a asp-action="Index" class="btn-secondary-custom text-center py-2">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
